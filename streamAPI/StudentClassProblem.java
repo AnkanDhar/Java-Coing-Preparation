@@ -1,9 +1,11 @@
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class StudentClassProblem {
@@ -48,8 +50,12 @@ public static void main(String[] args) {
 						.collect(Collectors.toList());
 	//System.out.println(map2);
 	
-	Map<Integer, String> studentMap = students.stream().sorted(Comparator.comparing(Student::getAge).reversed()).collect(Collectors.toMap(Student::getAge, Student::getName, (v1,v2)->v1+","+v2));
-	System.out.println(studentMap);
+	Map<Integer, List<String>> map3 = students.stream().collect(Collectors.groupingBy(Student::getAge,Collectors.mapping(Student::getName,Collectors.toList())));
+	System.out.println(map3);
 	
+	//Now we need to sort the above array on the basis of age.
+	List<Entry<Integer, List<String>>> list = map3.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByKey())).collect(Collectors.toList());
+	//System.out.println(list);
 }
+	
 }
