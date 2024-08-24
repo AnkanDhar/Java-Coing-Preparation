@@ -1,0 +1,573 @@
+o =>Give an example of Java Overriding, variable Hiding, Mthod Hiding
+
+    **** Static, non-static variables and static, non-static methods all can be inherited. Only static method can't be over-ride.
+    *** Parent object can access only parent class variable and methods. (child class methods only if it's a override method of parent class)
+    class Parent{
+
+      int num = 20;
+      static int num1 = 30;
+
+      public void test(){
+        System.out.println("parent test");
+      }
+      public static void test2(){
+        System.out.println("parent test 2");
+      }
+    }
+
+    class Child extends Parent{
+      //Variable Hiding
+      int num = 40;
+      static int num1 = 50;
+      
+      //Method Overriding
+      public void test(){
+        System.out.println("Child test");
+      }
+      // Method Hiding
+      public static void test2(){
+        System.out.println("Child test 2");
+      }
+    }
+    public class Main {
+      
+      public static void main(String[] args) {
+          Child c = new Child();
+            System.out.println(c.num); // 20, 40 variable hiding
+            System.out.println(Child.num1); // 30, 50 variable hiding
+            c.test(); // "Parent test", "Child test", Mthod Overriding
+            Child.test2(); //"Parent test2", "Child test2", Method Hiding 
+          
+          Parent p = new Child(); // parent class object can access only variables and methods of parent class.
+            System.out.println(p.num); //20
+            System.out.println(Parent.num1); // 30 
+            p.test(); // "Parent test", "Child test" method Overriding
+            Parent.test2(); //"Parent test2", "Parent test2"  static method can't be override
+      }
+    }
+
+1 => binary search of a Array 
+       int [] arr = {10,20,30,40,50};
+        int num = 20;
+
+        int l = 0;
+        int h = arr.length-1;
+        boolean flag = false;
+        
+        while(l<=h){
+          int m = (l+h)/2;
+          
+          if(arr[m]==num){
+            System.out.println("Emement found at index : "+m);
+            flag = true;
+            break;
+          }else if(num > arr[m]){
+              l = m+1;            
+          }else {
+            h = m-1;
+          }
+        }
+        
+        if(flag==false){
+          System.out.println("Element not found");
+        }
+
+2 => Swap two String with out using 3rd variable 
+        String s1 = "Ankan";
+        String s2 = "Dhar";
+        
+        s1 = s1 + s2; //AnkanDhar
+        s2 = s1.substring(0,s1.length()-s2.length()); // 0, s1.length(); 
+        s1 = s1.substring(s2.length());
+        
+        System.out.println("S1 : "+s1+", S2 : "+s2);
+
+3 => Reverse a number 
+        int num = 123;
+        int result = 0;
+        
+        while(num>0){ 
+            int remainder = num % 10; 
+            result =result * 10 + remainder; 
+            num = num /10; 
+        }
+            System.out.println(result);
+
+4 =>Reverse A Single String word
+        String s = "Ankan";
+        String result = "";
+        
+        for(int i = s.length()-1; i>=0; i--){
+            result = result + String.valueOf(s.charAt(i));
+        }
+        System.out.println("After Reverse : "+result);
+
+5 =>Reverse a String line 
+        String s1 = "I am Ankan Dhar";
+        String [] arr = s1.split(" ");
+        StringBuilder result = new StringBuilder("");
+        String word = "";
+        
+        for(int i = arr.length-1; i>=0; i--){
+            StringBuilder sb = new StringBuilder(arr[i]);
+            StringBuilder s = sb.reverse(); //reversing each word
+            result = result.append(s).append(" "); //concatenating each reverse word. 
+        }
+
+        System.out.println(result);
+    ===================================================
+        String s1 = "I am Ankan Dhar";
+        String [] arr = s1.split(" ");
+        String result = "";
+        String word = "";
+        
+        for(int i = arr.length-1; i>=0; i--){
+            String wrd = arr[i]; //Dhar
+            
+            for(int j = wrd.length()-1; j>=0; j--){
+                word = word + String.valueOf(wrd.charAt(j));
+            }
+            result = result + word+" ";
+            word = "";
+        }
+        
+        System.out.println(result);
+
+6 =>Merge sort a Array in java
+        public static void main(String[] args) {
+        
+            // merge sort = recursively divide array in 2, sort, re-combine
+            // run-time complexity = O(n Log n)
+            // space complexity    = O(n)
+            
+            int[] array = {8, 2, 5, 3, 4, 7, 6, 1};
+            
+            mergeSort(array);
+            
+            for(int i = 0; i < array.length; i++){
+                System.out.print(array[i]+ " ");
+            }
+        }
+
+        private static void mergeSort(int[] array) {
+            
+            int length = array.length;
+            if (length <= 1) return; //base case
+            
+            int middle = length / 2;
+            int[] leftArray = new int[middle];
+            int[] rightArray = new int[length - middle];
+            
+            int j = 0; //right array
+            
+            for(int i = 0; i < length; i++) {
+                if(i < middle) { // inserting element in left array
+                    leftArray[i] = array[i];
+                }
+                else { //inserting elements in right array
+                    rightArray[j] = array[i];
+                    j++;
+                }
+            }
+            mergeSort(leftArray);
+            mergeSort(rightArray);
+            merge(leftArray, rightArray, array);
+        }
+        
+        private static void merge(int[] leftArray, int[] rightArray, int[] array) {
+            
+            int leftSize = array.length / 2;
+            int rightSize = array.length - leftSize;
+            int i = 0, // for array
+            int l = 0; //for left array
+            int r = 0; //for right array
+            
+            //check the conditions for merging
+            while(l < leftSize && r < rightSize) {
+                if(leftArray[l] < rightArray[r]) {
+                    array[i] = leftArray[l];
+                    i++;
+                    l++;
+                }
+                else {
+                    array[i] = rightArray[r];
+                    i++;
+                    r++;
+                }
+            }
+            //Here we are inserting extra elements of left array to the merged array.
+            while(l < leftSize) {
+                array[i] = leftArray[l];
+                i++;
+                l++;
+            }
+            //Here we are inserting extra elements of right array to the merged array.
+            while(r < rightSize) {
+                array[i] = rightArray[r];
+                i++;
+                r++;
+            }
+        }
+
+7 =>count number of odd and even digits in a number
+      int num = 1234567;
+      int even = 0, odd = 0;
+      
+      while(num>0){
+        int remainder = num % 10;
+        if(remainder % 2 ==0){
+          even ++;
+        }else{
+          odd++;
+        }
+        num = num /10;
+      }
+      System.out.println("Even : "+even+", Odd : "+odd);
+
+8 =>alternatively sort the given array
+      int [] input = {9,7,1,4,10,3,8,2,5,6};
+      int [] result = new int[input.length]; 
+      Arrays.sort(input); //Time-Complexity = O(N LogN)
+      
+      int start = 0;
+      int end = input.length-1;
+      
+      for(int i = 0; i<input.length; i++){ //time Time-Complexity = O(N)
+            if(i%2==0){
+            result[i] = input[start];
+            start++;
+            }else{
+            result[i] = input[end];
+            end--;
+            }
+      }
+      System.out.println("Result : "+Arrays.toString(result)); // [1,10,2,9,3,8,4,7,5,6]
+      Time-Complexity = O(N)+O(NlogN), Space-Complexity = O(1), constant
+
+9 =>Create a deadLock situation programatically.
+      Object obj1 = new Object();
+      Object obj2 = new Object();
+      
+      Runnable r1 = ()->{
+        synchronized(obj1){
+          System.out.println("Thread 1 has received lock of obj1 and waiting for obj2 lock");
+          synchronized(obj2){
+            System.out.println("Thread 1 has received obj2 lock");
+          }
+        }
+      };
+      
+       Runnable r2 = ()->{
+        synchronized(obj2){
+          System.out.println("Thread 2 has received lock of obj2 and waiting for obj1 lock");
+          synchronized(obj1){
+            System.out.println("Thread 2 has received obj1 lock");
+          }
+        }
+      };
+      
+      
+      new Thread(r1).start();
+      new Thread(r2).start();
+
+10 =>Reverse a LinkedList 
+       LinkedList<Integer> ll = new LinkedList<>();
+      ll.add(12);
+      ll.add(23);
+      ll.add(10);
+      ll.add(17);
+      
+      Iterator<Integer> itr = ll.descendingIterator();
+      while(itr.hasNext()){
+        System.out.println(itr.next());
+      }
+
+11 =>count the occurance of each character in a String 
+          String input  = "abcdABCDabcd";
+      String [] arr = input.split("");
+      
+      Map<String, Integer> map = new HashMap<>();
+      
+      for(String s : arr){
+        if(map.containsKey(s)){
+          map.put(s,map.get(s)+1);
+        }else{
+          map.put(s,1);
+        }
+      }
+      
+      Set<String> keys = map.keySet();
+      for(String key : keys){
+        System.out.print(key+"="+map.get(key)+" ");
+      }
+      
+12 =>Write a program to find the common elements between two arrays.
+            int[] array1 = {1, 2, 3, 4, 5};
+        int[] array2 = {3, 4, 5, 6, 7};
+        
+        Set<Integer> set1 = new HashSet<>();
+        for(int i : array1){
+          set1.add(i);
+        }
+        
+        ArrayList<Integer> list = new ArrayList<>();
+        
+        for(int i : array2){
+          if(set1.contains(i)){
+            list.add(i);
+          }
+        }
+        
+        System.out.println(list);
+
+13 =>Implement stack using LinkedList
+
+      public class StackUsingLinkedList {
+      public Node top;
+  
+      public StackUsingLinkedList() {
+      this.top =null;
+      }
+
+      public void push(int data) {
+        Node nextNode = new Node(data);
+        nextNode.nextNodeAddress = top;
+        top = nextNode;
+        System.out.println("Pushed "+data+" into the stack.");
+      }
+
+      public int pop() {
+        if(top==null) {
+        return -1;
+        }
+        int dataOfTopNode = top.data;
+        top = top.nextNodeAddress;
+        return dataOfTopNode;
+      }
+  
+      public int peek() {
+        if(top==null) {
+        return -1;
+        }
+        return top.data;
+      }
+  
+      public boolean isEmpty() {
+        return top ==null;
+      }
+
+    public static void main(String[] args) {
+
+        StackUsingLinkedList stackUsingLinkedList = new StackUsingLinkedList(); //top = null;
+        stackUsingLinkedList.push(10); // (10,null)  top = Memory address of that 1st node.
+        stackUsingLinkedList.push(20); //(20,memory address of 1st node)  top = memory address of 2nd node.
+        stackUsingLinkedList.push(30); // (30, memory address of 2nd Node) top = memory address of 3rd node.
+
+        System.out.println("Peek operation without any pop : "+stackUsingLinkedList.peek());
+        System.out.println("1st Pop operation : "+stackUsingLinkedList.pop());
+        System.out.println("Peek operation after 1st pop : "+stackUsingLinkedList.peek());
+        System.out.println("2nd Pop operation : "+stackUsingLinkedList.pop());
+        System.out.println("Peek operation after 2nd pop : "+stackUsingLinkedList.peek());
+        System.out.println("isEmplty :"+stackUsingLinkedList.isEmpty());
+        System.out.println("3rd Pop operation : "+stackUsingLinkedList.pop());
+        System.out.println("Peek operation after 3rd pop : "+stackUsingLinkedList.peek());
+        System.out.println("isEmplty :"+stackUsingLinkedList.isEmpty());
+        }
+    }
+    class Node{
+            int data;
+            Node nextNodeAddress;
+        public Node(int data) {
+            this.data = data;
+            this.nextNodeAddress = null;
+        }
+    }
+
+14 =>Check if a given string is an anagram of another string
+      String s1 = "Ankan";
+      String s2 = "knnaAa";
+      boolean flag = true;
+      
+      if(s1.length()!=s2.length()){
+        System.out.println("Not Anagrams");
+      }else{
+        ArrayList<String> list1 = new ArrayList<>(Arrays.asList(s1.split("")));
+        ArrayList<String> list2 = new ArrayList<>(Arrays.asList(s2.split("")));
+      
+        for(String s : list1){
+          if(!list2.contains(s))
+              flag = false;
+        }
+        
+        if(flag)
+        System.out.println("Anagram");
+        else
+        System.out.println("Not Anagrams");
+      }
+
+15 =>Rotate an array to the right by k steps.
+
+    public static void main(String[] args) {
+      int [] input  = {10,20,30,40,50,60};
+      //Rotate the array to the right by k steps.
+      int k = 3;
+      
+      //first reverse the entire array
+      reverseTheArray(input, 0, input.length-1); // [60, 50, 40, 30, 20, 10]
+      //then reverse the first k element, (60,50,40)
+      reverseTheArray(input, 0, k-1); // [40, 50, 60, 30, 20, 10]
+      // then revese the remaining elements (30,20,10)
+      reverseTheArray(input, k, input.length-1); [40, 50, 60, 10, 20, 30]
+      
+      System.out.println(Arrays.toString(input)); // [40, 50, 60, 10, 20, 30]
+    }
+  
+      private static void reverseTheArray(int[] input, int start, int end){
+        while(start<end){
+          int temp = input[end];
+          input[end] = input[start];
+          input[start] = temp;
+          start++;
+          end--;
+        }      
+      }
+      Time-complexity = O(n) , Space-complexity = O(1) 
+
+16 =>Write a program to find the missing number in an array of 1 to N 
+    public static void main(String[] args) {
+      int [] input  = {10,11,12,13,14,16};
+      System.out.println(missimgNumber(input));
+    }
+    
+    private static int missimgNumber(int []input){
+      int min = input[0];
+      int max = input[input.length-1];
+      int num = max-min+1; //number of element between max and min, according to arithmatic mean
+      int expectedSum = num*((min+max)/2); //number of elements * avg. //O(1) Time-Complexity, i.e constant
+      
+      int actualSum = 0;
+      for(int i : input){
+        actualSum += i; //O(n) Time-Complexity 
+      }
+      
+      return (expectedSum-actualSum);
+    }
+    total Time-Complexity O(n),  spceComplexity O(1)
+
+17 =>Merge two unsorted arrays into a single sorted array
+    public static void main(String[] args) {
+        int[] arr1 = {1, 5, 7, 3};
+        int[] arr2 = {2, 6, 9, 8, 4};
+        
+        System.out.println(Arrays.toString(mergeArrays(arr1, arr2)));
+    }
+    
+    private static int[] mergeArrays(int[] arr1, int[] arr2){
+      Arrays.sort(arr1); //[1,3,5,7]
+      Arrays.sort(arr2); //[2,4,6,8,9]
+      
+      int minLength = Math.min(arr1.length, arr2.length);
+      int [] merge = new int[arr1.length+arr2.length];
+      int l = 0, r = 0, m = 0;
+      
+      while(l<minLength && r<minLength){
+        if(arr1[l]<arr2[r]){
+          merge[m++] = arr1[l++];
+        }else{
+          merge[m++] = arr2[r++];
+        }
+      }
+      //adding the extra elements of arr1 into merge Array
+      while(l<arr1.length){
+        merge[m++] = arr1[l++];
+      }
+      //adding the extra elements of arr2 into merge Array
+      while(r<arr2.length){
+        merge[m++] = arr2[r++];
+      }
+      return merge;
+    }
+  Time-Complexity = O(n1+n2), spceComplexity = O(n1+n2)  
+
+18 =>Find factorial of a number
+    public static void main(String[] args) {
+        System.out.println("Factorial  : "+findFactorial(10));
+    }
+    
+    private static int findFactorial(int num){
+    if(num<=0){
+        return 1;
+      }else{
+        //Approch-1
+        return num * findFactorial(num-1);
+        
+        //Approch-2
+        /* int result = 1;
+        for(int i = num; i>0; i--){
+          result = result *i;
+        }
+        return result;*/
+      }
+    }
+
+19 =>Find Kth smallest / largest number in an array.
+
+    public static void main(String[] args) {
+      int [] arr = {10,20,12,43,23,30};
+      System.out.println("secondHigestElement : "+secondHighestElement(arr));
+      System.out.println("secondLowestElement : "+secondLowestElement(arr));
+    }
+  
+    private static int secondHighestElement(int [] input){
+      int highest = Integer.MIN_VALUE;
+      int secondHigestElement = Integer.MIN_VALUE;
+      for(int num : input){
+        if(num>highest && num>secondHigestElement){
+          secondHigestElement = highest;
+          highest = num;
+        }else if(num <highest && num>secondHigestElement){
+          secondHigestElement = num;
+        }
+      }
+      return secondHigestElement;
+    }
+
+    private static int secondLowestElement(int [] input){
+        int lowest = Integer.MAX_VALUE;
+        int secondLowest = Integer.MAX_VALUE;
+        for(int num : input){
+          if(num<lowest && num<secondLowest){
+            secondLowest = lowest;
+            lowest = num;
+          }else if(num>lowest && num<secondLowest){
+            secondLowest = num;
+          }
+        }
+        return secondLowest;
+    }
+
+20 =>Shift all the unique elements to the left and rest of the elements to right 
+    public static void main(String[] args) {
+      System.out.println("Hello, World!");
+      
+      int [] arr = {1,1,2,1,3,4,5,4,4,1};
+      
+      System.out.println(Arrays.toString(shiftUniqueElements(arr)));
+    }
+  
+    private static int[] shiftUniqueElements(int [] input){
+      int start = 0;
+      int end = input.length-1;
+      Set<Integer> set = new HashSet<>();
+      int[] result = new int[input.length];
+      
+      for(int i : input){
+        if(set.contains(i)){
+          result[end--] = i;
+        }else{
+          set.add(i);
+          result[start++] = i;
+        }
+      }
+      return result;
+    }
