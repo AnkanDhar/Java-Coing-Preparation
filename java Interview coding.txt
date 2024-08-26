@@ -678,3 +678,50 @@ o =>Give an example of Java Overriding, variable Hiding, Mthod Hiding
           }
         }
       }
+
+26 =>Find the sum of 2 very large numbers with commas represented as strings (do not use BIG integer)
+    public static void main(String[] args) {
+      //System.out.println("Hello, World!");
+      String s1 = "8,944,394,323,791,464";
+      String s2 = "14,472,334,024,676,221";
+      
+      System.out.println(sumOfTwoNumbers(s1,s2));
+    }
+  
+    private static String sumOfTwoNumbers(String s1, String s2){
+      s1 = s1.replace(",","");
+      s2 = s2.replace(",","");
+      
+      int i = s1.length()-1;
+      int j = s2.length()-1;
+      int carry = 0;
+      StringBuilder result = new StringBuilder("");
+      
+      while(i>=0 || j>=0 || carry !=0){
+        int num1 = i>=0 ? s1.charAt(i)-'0' : 0;
+        int num2 = j>=0 ? s2.charAt(j)-'0' :0;
+        int sum = num1 + num2 + carry;
+        carry = sum/10;
+        result.append(sum%10);
+        i--;
+        j--;
+      }
+      //return result.reverse().toString();
+      return putCommaInTheGivenNumber(result.reverse().toString());
+    }
+  
+    private static String putCommaInTheGivenNumber(String num){
+      StringBuilder result = new StringBuilder();
+      int length = num.length();
+      int count = 0;
+      for(int i = length-1; i>=0; i--){
+        result.append(num.charAt(i));
+        count++;
+        if(count%3==0 && count<length){
+          result.append(",");
+        }
+      }
+      return result.reverse().toString();
+    }
+
+27 =>
