@@ -658,4 +658,23 @@ o =>Give an example of Java Overriding, variable Hiding, Mthod Hiding
       }
       System.out.println(Arrays.toString(result));
 
-25 =>
+25 => find the pair of elements from an array whose sum is the given number in O(n)
+      int [] arr = {1,2,3,4,7,-2,-3,3,-1};
+      int sum = 5; //
+      
+      Map<Integer, Integer> map = new HashMap<>();
+      
+      for(int i : arr){
+        int num = sum-i;
+        if(map.containsKey(i)){
+          map.put(i, map.get(i)+1);
+        }else{
+          map.put(i, 1);
+        }
+        if(map.containsKey(num)){
+          int val = map.get(num);
+          for(int j =0; j<val; j++){
+            System.out.print("("+i+","+num+")"+" "); // (3,2) (4,1) (-2,7) (3,2)
+          }
+        }
+      }
