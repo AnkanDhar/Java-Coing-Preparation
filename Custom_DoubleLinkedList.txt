@@ -1,0 +1,101 @@
+package dsa;
+
+//Linked List -> maintains insertion order, can store duplicate element
+//LinkedList  has two reference variable, head and tail;
+//head element -> should always points to the starting Node
+//tail -> should always points to the last Node
+
+public class Custom_DoubleLinkedList {
+	int size;
+	NodeDL head, tail; //reference variables, which stores memory address of obj.
+	
+	public Custom_DoubleLinkedList() {
+		this.size = 0;
+		this.head = null;
+		this.tail = null;
+	}
+	
+	public void add(int value) {
+		NodeDL newNode = new NodeDL(value); //newNode.next ->null, newNode.prev -> null
+		if(head==null) {
+			head = tail = newNode; // newNode.next -> null, newNode.prev -> null;
+		}else {
+			tail.next = newNode; //1st Node.next-> newNode memory address, 
+			newNode.prev = tail; //prev ->tail, next ->null
+			tail = newNode;
+		}
+		size++;
+		System.out.println(value+" has added in the list");
+	}
+	//to get the data 
+	public int get(int index) {
+		if(index<0 || index>=size) {
+			throw new IndexOutOfBoundsException("Index is out of bound");
+		}
+		NodeDL currentNode = head; // we wants to get the Node at certain index
+		for(int i = 1; i<=index; i++) {
+			currentNode = currentNode.next;
+		}
+		return currentNode.data; //so that we can return the data of that Node 
+	}
+	
+	public int size() {
+		return size;
+	}
+	
+	public boolean isBlank() {
+		return size ==0;
+	}
+	
+	public void display() {
+		NodeDL currentNode = head;
+		while(currentNode !=null) {
+			System.out.print(currentNode.data+" ");
+			currentNode = currentNode.next;
+		}
+		System.out.println();
+	}
+	
+	public void reverse() {
+		NodeDL tempNode = null;
+		NodeDL currentNode = head;
+		
+		while(currentNode !=null) {
+			tempNode = currentNode.prev;
+			currentNode.prev = currentNode.next;
+			currentNode.next = tempNode;
+			currentNode = currentNode.prev; // move to the next node (which is now the previous node)
+		}
+		/* 1. after this while loop -> memory address of next node is stored in .prev variable of every Node
+		 * 2. after this while loop -> tempNode should hold memory address of last Node
+		 */
+		if(tempNode != null) {
+			tail = head;
+			head = tempNode.prev;
+		}
+	}
+	
+	public static void main(String[] args) {
+		Custom_DoubleLinkedList list = new Custom_DoubleLinkedList();
+		list.add(10);
+		list.add(20);
+		list.add(30);
+		System.out.println("Size of the list : "+list.size());
+		System.out.println("Element at index of 2 : "+list.get(2));
+		System.out.println("Is list balnk : "+list.isBlank());
+		list.display();
+		list.reverse();
+		list.display();
+		
+	}
+}
+
+class NodeDL{
+	int data;
+	NodeDL next, prev;
+	public NodeDL(int data) {
+		this.data = data; //By default next, prev = null;
+		this.next = null;
+		this.prev = null;
+	}
+}
