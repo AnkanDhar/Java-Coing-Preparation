@@ -707,14 +707,14 @@ o =>Give an example of Java Overriding, variable Hiding, Mthod Hiding
         j--;
       }
       //return result.reverse().toString();
-      return putCommaInTheGivenNumber(result.reverse().toString());
+      return putCommaInTheGivenNumber(result.toString());
     }
   
     private static String putCommaInTheGivenNumber(String num){
       StringBuilder result = new StringBuilder();
       int length = num.length();
       int count = 0;
-      for(int i = length-1; i>=0; i--){
+      for(int i = 0; i<length; i++){
         result.append(num.charAt(i));
         count++;
         if(count%3==0 && count<length){
