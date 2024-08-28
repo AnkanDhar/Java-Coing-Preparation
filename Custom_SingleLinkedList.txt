@@ -1,0 +1,98 @@
+package dsa;
+
+
+public class Custom_SingleLinkedList {
+	//Linked List -> maintains insertion order, can store duplicate element
+	//LinkedList  has two reference variable, head and tail;
+	//head element -> should always points to the starting element
+	//tail -> should always points to the last element
+	
+	int size;
+	NodeSL head, tail;
+	
+	public Custom_SingleLinkedList() {
+		this.size = 0;
+		this.head = null;
+		this.tail = null;
+	}
+	
+	public void add(int value) {
+		NodeSL newNode = new NodeSL(value);
+		if(head==null) {
+			head = tail = newNode;
+		}else {
+			tail.nextNode = newNode;
+			tail = newNode;
+		}
+		System.out.println(value+" has added in list");
+		size++;
+	}
+	
+	public int get(int index) {
+		if(index<0 || index>=size) {
+			throw new IndexOutOfBoundsException("Index should be in between 0 and size of the list");
+		}
+		if(index==0) {
+			return head.data;
+		}else {
+			NodeSL currentNode = head;
+			for(int i = 1; i<=index; i++) {
+				currentNode = currentNode.nextNode;
+			}
+			return currentNode.data;
+		}
+	}
+	
+	public void display() {
+		NodeSL currentNode = head;
+		while(currentNode != null) {
+			System.out.print(currentNode.data+" ");
+			currentNode = currentNode.nextNode;
+		}
+		System.out.println(); 
+	}
+	
+	public int size() {
+		return size;
+	}
+	
+	public boolean isEmpty() {
+		return size==0;
+	}
+	
+	public void reverse() {
+		NodeSL preNode = null;
+		NodeSL temp = null;
+		NodeSL currentNode = head;
+		
+		while(currentNode !=null) {		
+			temp = currentNode.nextNode;
+			currentNode.nextNode = preNode;
+			preNode = currentNode;
+			currentNode = temp;
+		}
+		head = preNode;	
+	}
+	
+	public static void main(String[] args) {
+		Custom_SingleLinkedList sl = new Custom_SingleLinkedList();
+		sl.add(10);
+		sl.add(20);
+		sl.add(30);
+		System.out.println("Size of list :"+sl.size());
+		System.out.println(sl.get(2));
+		sl.display();
+		sl.reverse();
+		sl.display();
+	}
+}
+
+class NodeSL{
+	int data;
+	NodeSL nextNode;
+	
+	public NodeSL(int value) {
+		this.data = value;
+		this.nextNode = null;
+	}
+}
