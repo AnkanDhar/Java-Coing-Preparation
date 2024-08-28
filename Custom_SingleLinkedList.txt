@@ -69,14 +69,14 @@ public class Custom_SingleLinkedList {
 		3. make the current Node's .nextNode as currentNode for the next iteration.
 		*/
 		NodeSL preNode = null;
-		NodeSL temp = null;
+		NodeSL tempNode = null;
 		NodeSL currentNode = head;
 		
 		while(currentNode !=null) {		
-			temp = currentNode.nextNode;
+			tempNode = currentNode.nextNode;
 			currentNode.nextNode = preNode;
 			preNode = currentNode;
-			currentNode = temp;
+			currentNode = tempNode;
 		}
 		head = preNode;	
 	}
