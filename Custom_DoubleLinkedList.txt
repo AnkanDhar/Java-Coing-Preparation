@@ -31,12 +31,15 @@ public class Custom_DoubleLinkedList {
 	public int get(int index) {
 		if(index<0 || index>=size) {
 			throw new IndexOutOfBoundsException("Index is out of bound");
-		}
-		NodeDL currentNode = head; // we wants to get the Node at certain index
-		for(int i = 1; i<=index; i++) {
-			currentNode = currentNode.next;
-		}
+		}else if(index == 0){
+			return head.data;
+		}else{
+			NodeDL currentNode = head;
+			for(int i = 1; i<=index; i++) {
+				currentNode = currentNode.next;
+			}
 		return currentNode.data; //so that we can return the data of that Node 
+		}
 	}
 	
 	public int size() {
