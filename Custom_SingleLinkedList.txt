@@ -61,6 +61,13 @@ public class Custom_SingleLinkedList {
 	}
 	
 	public void reverse() {
+		/*
+		here in each iteration, 
+		1. we are bringing the memory address of the Node from the last iteration in a variable called preNode, 
+		   and store this preNode in the current node's .nextNode reference variable, 
+		2. then make the current node as preNode for the next iteration. and finally, 
+		3. make the current Node's .nextNode as currentNode for the next iteration.
+		*/
 		NodeSL preNode = null;
 		NodeSL temp = null;
 		NodeSL currentNode = head;
