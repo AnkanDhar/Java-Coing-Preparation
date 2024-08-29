@@ -724,4 +724,31 @@ o =>Give an example of Java Overriding, variable Hiding, Mthod Hiding
       return result.reverse().toString();
     }
 
-27 =>
+27 =>count the reparation of consecutive repeating characters in a String and leave the non-consecutive character as it is.
+    public static void main(String[] args) {
+      String str = "aaabbcdddde";
+      System.out.println(countTheConsecutiveCharacters(str));
+  }
+  
+  private static String countTheConsecutiveCharacters(String input){
+      int count = 1;
+      StringBuilder result = new StringBuilder("");
+      
+      for(int i = 1; i<input.length(); i++){
+        if(input.charAt(i) == input.charAt(i-1)){
+          count++;
+        }else{
+          result.append(input.charAt(i-1));
+          if(count>1){
+            result.append(count);
+          }
+          count = 1;
+        }
+      }
+      //adding last Character of the string to the result
+      result.append(input.charAt(input.length()-1));
+      if(count>1){
+        result.append(count);
+      }
+      return result.toString();
+  }
