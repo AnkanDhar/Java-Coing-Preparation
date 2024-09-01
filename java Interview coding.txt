@@ -752,3 +752,79 @@ o =>Give an example of Java Overriding, variable Hiding, Mthod Hiding
       }
       return result.toString();
   }
+
+28 => Find the next number of the array 
+    public static void main(String[] args) {
+      //System.out.println("Hello, World!");
+      int [] arr = {9,9,9}; //1,0,0,0,
+      System.out.println("New Array is  : "+Arrays.toString(findTheNextNumber(arr)));
+   }
+  
+    private static int[] findTheNextNumber(int[] arr){
+      int i = arr.length-1;
+      int carry = 0;
+      List<Integer> list = new ArrayList<>();
+      
+      while(i>=0 || carry!=0){
+        int num = i>=0 ? arr[i] : 0;
+        int sum = i==arr.length-1 ? num +1 : num+carry;
+        list.add(sum%10);
+        carry = sum/10;
+        i--;
+      }
+      int[] result = new int[list.size()];
+      int count = 0;
+      for(int j = list.size()-1; j>=0; j--){
+        result[count] = list.get(j);
+        count++;
+      }
+      return result;
+    }
+
+29 => Find the sub array of size 3 with maximum sum from the given array
+    public static void main(String[] args) {
+      int[] arr = {1, 4, 2, 10, 23, 3, 1, 0, 20};
+      
+      System.out.println("Maximum sum is: "+findTheSubArrayWithMaximumSum(arr));
+    }
+  
+    private static String findTheSubArrayWithMaximumSum(int[] input){
+      if(input.length<3){
+        throw new IllegalArgumentException("Size of the array has tobe minimum 3");
+      }
+      int maxSum = input[0]+input[1]+input[2];
+      int currentSum = maxSum;
+      int a = 0, b = 1, c = 2;
+      StringBuilder result = new StringBuilder("");
+      
+      for(int i = 3; i<input.length; i++){
+        currentSum = currentSum+input[i]-input[i-3];
+        if(currentSum>maxSum){
+          maxSum = currentSum;
+          a = b;
+          b = c;
+          c = i;
+        }
+      }
+      
+      return result.append(maxSum+", index are : "+a+", "+b+", "+c).toString();
+    }
+
+30 =>Find the sub array with maximum sum.
+    public static void main(String[] args) {
+      int[] a = { -2, -3, 4, -1, -2, 1, 5, -3 };
+      
+      System.out.println("Maximum contiguous sum is : "+maximumSubArraySum(a));
+    }
+  
+    private static int maximumSubArraySum(int [] input){
+      int maxSum = Integer.MIN_VALUE;
+      int currentSum = 0;
+      for(int i : input){
+        currentSum +=i;
+        if(maxSum<currentSum){
+          maxSum = currentSum;
+        }
+      }
+      return maxSum;
+    }
