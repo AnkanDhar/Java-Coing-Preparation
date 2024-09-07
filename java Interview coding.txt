@@ -828,3 +828,15 @@ o =>Give an example of Java Overriding, variable Hiding, Mthod Hiding
       }
       return maxSum;
     }
+
+31 => Shift all unique elements to the left of an sorted arraay. 
+      int [] arr = {0,0,1,1,1,2,3,3,4,5,5,5,6,6};
+      int count = 0;
+      for(int i = 1; i<arr.length; i++){
+        if(arr[i-1]!=arr[i]){
+          arr[count++] = arr[i-1];
+        }
+      }
+      arr[count] = arr[arr.length-1];
+      count++;
+      System.out.println(count+" : "+Arrays.toString(arr));
